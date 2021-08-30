@@ -1,14 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/admin/Documents/GitHub/Painonhallinta/painonhallinta.db" readonly="0" foreign_keys="" case_sensitive_like="" temp_store="" wal_autocheckpoint="" synchronous=""/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1437"/><column_width id="4" width="0"/></tab_structure><tab_browse><current_table name="0,0:"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="Henkilötiedot ja mittaukset.sql">SELECT henkilo.henkilo_id, henkilo.sukunimi, henkilo.etunimi, mittaus.mittaus_id, mittaus.pituus, mittaus.paino
-FROM henkilo, mittaus
-WHERE henkilo.henkilo_id = mittaus.henkilo_id</sql><sql name="Kaikki henkilöt ja niiden mittaukset.sql">SELECT henkilo.henkilo_id, henkilo.sukunimi, henkilo.etunimi, mittaus.mittaus_id, mittaus.pituus, mittaus.paino
-FROM henkilo LEFT OUTER JOIN mittaus ON henkilo.henkilo_id = mittaus.henkilo_id
-</sql><sql name="SQL 3">CREATE VIEW &quot;henkilot_ja _mittaukset&quot; AS SELECT henkilo.henkilo_id, henkilo.sukunimi, henkilo.etunimi, mittaus.mittaus_id, mittaus.pituus, mittaus.paino
-FROM henkilo LEFT OUTER JOIN mittaus ON henkilo.henkilo_id = mittaus.henkilo_id</sql><sql name="Edit View henkilot_ja _mittaukset">DROP VIEW &quot;main&quot;.&quot;henkilot_ja _mittaukset&quot;;
-CREATE VIEW &quot;henkilot_ja_mittaukset&quot; AS SELECT henkilo.henkilo_id, henkilo.sukunimi, henkilo.etunimi, mittaus.mittaus_id, mittaus.pituus, mittaus.paino
-FROM henkilo LEFT OUTER JOIN mittaus ON henkilo.henkilo_id = mittaus.henkilo_id</sql><sql name="SQL 5">CREATE TABLE henkilo
-        (henkilo_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        etunimi TEXT NOT NULL,
-        sukunimi TEXT NOT NULL,
-        sukupuoli INTEGER NOT NULL,
-        spaiva DATE NOT NULL)</sql><sql name="SQL 6">CREATE VIEW &quot;henkilot_ja_mittaukset&quot; AS SELECT henkilo.henkilo_id, henkilo.sukunimi, henkilo.etunimi, mittaus.mittaus_id, mittaus.pituus, mittaus.paino
-FROM henkilo LEFT OUTER JOIN mittaus ON henkilo.henkilo_id = mittaus.henkilo_id</sql><current_tab id="5"/></tab_sql></sqlb_project>
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/admin/Documents/GitHub/Painonhallinta/painonhallinta.db" readonly="0" foreign_keys="" case_sensitive_like="" temp_store="" wal_autocheckpoint="" synchronous=""/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1755"/><column_width id="4" width="0"/></tab_structure><tab_browse><current_table name="0,0:"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="Henkilön_viimeiset_tiedot.sql">CREATE VIEW	henkilon_viimeiset_tiedot AS
+SELECT etunimi, sukunimi, sukupuoli, pituus, paino, ika
+FROM henkilon_viimeisin_mittaus INNER JOIN henkilo_mittaus_ika_v2 ON henkilon_viimeisin_mittaus.viimeisin_mittaus_id = henkilo_mittaus_ika_v2.mittaus_id
+
+</sql><sql name="Henkilönviimeinenmittausid.sql">DROP VIEW &quot;main&quot;.&quot;henkilon_viimeisin_mittaus&quot;;
+CREATE VIEW henkilon_viimeisin_mittaus AS
+SELECT henkilo_id, max(mittaus_id) AS viimeisin_mittaus_id
+FROM henkilo_mittaus_ika_v2
+GROUP BY henkilo_id</sql><current_tab id="0"/></tab_sql></sqlb_project>
